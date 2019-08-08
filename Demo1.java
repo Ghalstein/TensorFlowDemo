@@ -18,7 +18,7 @@ public class Demo1 {
 		return g.opBuilder("AddN", "TheBigAdder")
 		.addInputList(inputs)
 		.build()
-		.<T>ouput(0);
+		.<T>output(0);
 	}
 
 	public static void main(String[] args) throws Exception {
