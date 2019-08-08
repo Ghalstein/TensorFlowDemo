@@ -2,6 +2,25 @@ import org.tensorflow.*;
 
 public class Demo1 {
 
+	public static <T> Output<T> addConstant(Graph g, String name, Object value) {
+		// creating the tesnor before adding it to the graph
+		try(Tensor<?> t = Tensor.create(value)) {
+			// setting the type, the value and build adds the tensor and ouput gives the handle back
+			return g.opBuilder("Const", name)
+				.setAttr("dtype", t.dataType())
+				.setAttr("value", t)
+				.build()
+				.<T>output(0);
+		}
+	}
+
+	public static <T> Output<T> addAddOperation(Graph g, Output<?>... inputs) {
+		return g.opBuilder("AddN", "TheBigAdder")
+		.addInputList(inputs)
+		.build()
+		.<T>ouput(0);
+	}
+
 	public static void main(String[] args) throws Exception {
 
 		try (Graph g1 = new Graph();) {
